@@ -1,8 +1,8 @@
 <view class="container">
   <view class="category-left">
-    <scroll-view scroll-y="true" style="height:100%">
+    <scroll-view scroll-y="true" style="height:100%" scroll-into-view="{{activeId}}">
       <block wx:for="{{category}}" wx:key="id">
-       <view class="catgegory-item {{activeId === item.id?'active-item':''}}" data-id="{{item.id}}" bindtap="clickItem">{{item.name}}</view>
+       <view class="catgegory-item {{activeId === item.id?'active-item':''}}" id="{{item.id}}" data-id="{{item.id}}" bindtap="clickItem">{{item.name}}</view>
       </block>
     </scroll-view>
   </view>

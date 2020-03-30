@@ -326,7 +326,8 @@ Page({
   onLoad: function () {
     this.setData({
       toView: 'a1',
-      heightArr: []
+      heightArr: [],
+      leftHeight: []
     })
     let query = wx.createSelectorQuery();
     query.selectAll('.catefory-main').boundingClientRect((rect) => {
@@ -334,6 +335,11 @@ Page({
         this.calculateHeight(ele.height);
       })
     }).exec();
+    query.selectAll('.catgegory-item').boundingClientRect((rect) => {
+      rect.forEach(ele => {
+        this.calculateLeftHeight(ele.height)
+      })
+    }).exec()
   },
   clickItem(e) {
     console.log('点击获得参数', e.currentTarget.dataset.id)
@@ -344,6 +350,7 @@ Page({
   },
   scroll(e) {
     let scrollHeight = e.detail.scrollTop;
+    console.log(scrollHeight)
     let index = this.calculateIndex(this.data.heightArr, scrollHeight);
     console.log(index, '设置哪一个')
     this.setData({
@@ -353,14 +360,19 @@ Page({
   },
   // 计算滚动的区间
   calculateHeight(height) {
+    console.log(height, '计算高度')
     if (!this.data.heightArr.length) {
       this.data.heightArr.push(height)
     } else {
-      this.data.heightArr.forEach(ele => {
-        height += ele
-      })
+      // this.data.heightArr.forEach(ele => {
+      //   height += ele
+      // })
+      const site = this.data.heightArr.length - 1
+      const endNum = this.data.heightArr[site]
+      height += endNum
       this.data.heightArr.push(height);
     }
+    console.log(this.data.heightArr)
   },
   // 计算左边选中的下标
   calculateIndex(arr, scrollHeight) {
@@ -373,6 +385,22 @@ Page({
         index = i;
       }
     }
-    return index + 1;
+    return index >= 10 ? index : index + 1;
+  },
+
+  handleTest() {
+    console.log('test')
+  },
+
+  calculateLeftHeight(height) {
+    if(!this.data.leftHeight.length) {
+      this.data.leftHeight.push(height)
+    } else {
+      const site = this.data.leftHeight.length - 1
+      const endNum = this.data.leftHeight[site]
+      height += endNum
+      this.data.leftHeight.push(height)
+    }
+    console.log('左侧', this.data.leftHeight)
   }
 })
