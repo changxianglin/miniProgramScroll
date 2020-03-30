@@ -1,0 +1,26 @@
+<view class="container">
+  <view class="category-left">
+    <scroll-view scroll-y="true" style="height:100%">
+      <block wx:for="{{category}}" wx:key="id">
+       <view class="catgegory-item {{activeId === item.id?'active-item':''}}" data-id="{{item.id}}" bindtap="clickItem">{{item.name}}</view>
+      </block>
+    </scroll-view>
+  </view>
+  <view class="category-right">
+    <scroll-view scroll-y="true" style="height:100%" scroll-into-view="{{toView}}" scroll-with-animation="ture" bindscroll="scroll">
+      <view class="categoty-detail">
+      <block wx:for="{{content}}" wx:key="id">
+        <view class="catefory-main">
+          <view class="category-title" id="{{item.id}}">{{item.title}}</view>
+          <view class="category-content">
+              <view class="content-item" wx:for="{{item.options}}" wx:for-item="i" wx:key="id">
+                <image src="{{i.src}}"></image>
+                <text>{{i.text}}</text>                                                      
+              </view>
+          </view>
+        </view> 
+      </block>
+      </view>
+    </scroll-view>
+  </view>
+</view>
